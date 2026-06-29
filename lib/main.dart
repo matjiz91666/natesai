@@ -411,7 +411,7 @@ class RateTrackerPage extends StatelessWidget {
       ProCard(child: Column(children: [
         const Text("ACTUAL SHIFT RATE", style: TextStyle(color: gold, fontWeight: FontWeight.w900)),
         const SizedBox(height: 10),
-        Row(children: [stat("ACTUAL LB/HR", f0(actualCookedHr), efficiency >= 95 ? green : efficiency >= 85 ? orange : red), stat("ACTUAL CASES/HR", f0(actualCasesHr))]),
+        Row(children: [stat("ACTUAL LB/HR", f0(actualCookedHr.toDouble()), efficiency >= 95 ? green : efficiency >= 85 ? orange : red), stat("ACTUAL CASES/HR", f0(actualCasesHr.toDouble())),
         Row(children: [stat("EFFICIENCY", "${f0(efficiency)}%", efficiency >= 95 ? green : efficiency >= 85 ? orange : red), stat("PACE", "${pace >= 0 ? "+" : ""}${f0(pace)} cases", pace >= 0 ? green : red)]),
         const SizedBox(height: 8),
         Text(pace >= 0 ? "Ahead of theoretical pace" : "Behind theoretical pace", style: TextStyle(color: pace >= 0 ? green : red, fontWeight: FontWeight.w900)),
@@ -435,7 +435,7 @@ class RateTrackerPage extends StatelessWidget {
           Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(h.label, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w900)),
             Text("${f0(h.actualCookedLb)} cooked lb • ${f0(h.actualCases)} cases", style: const TextStyle(color: muted)),
-            Text("${f0(hCookedHr)} lb/hr • ${f0(hCasesHr)} cases/hr • ${f0(hEfficiency)}%", style: const TextStyle(color: muted)),
+            Text("${f0(hCookedHr.toDouble())} lb/hr • ${f0(hCasesHr.toDouble())} cases/hr • ${f0(hEfficiency.toDouble())}%", style: const TextStyle(color: muted)),
           ])),
           IconButton(onPressed: () => store.deleteHour(h), icon: const Icon(Icons.delete_outline, color: red)),
         ]));
@@ -558,7 +558,7 @@ class AdvisorPage extends StatelessWidget {
         Text(p.name, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900)),
         const Text("Production tracking advice", style: TextStyle(color: gold, fontWeight: FontWeight.w900)),
         const SizedBox(height: 10),
-        advice("Pounds/hour", actualHr == 0 ? "Add an hourly entry to compare actual pounds/hour against theoretical." : "Actual cooked pounds/hour is ${f0(actualHr)} versus theoretical ${f0(c.cookedHour)}."),
+        advice("Pounds/hour", actualHr == 0 ? "Add an hourly entry to compare actual pounds/hour against theoretical." : "Actual cooked pounds/hour is ${f0(actualHr.toDouble())} versus theoretical ${f0(c.cookedHour)}."),
         advice("Efficiency", efficiency == 0 ? "No efficiency yet." : efficiency >= 95 ? "Efficiency is strong at ${f0(efficiency)}%. Keep current pace." : efficiency >= 85 ? "Efficiency is ${f0(efficiency)}%. Check feed timing, line delays, and pack-out speed." : "Efficiency is low at ${f0(efficiency)}%. Check for downtime, slow feeding, or pack-out bottleneck."),
         advice("Cases", "Total tracked cases this shift: ${f0(totalCases)}."),
       ])),
