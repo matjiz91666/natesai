@@ -395,7 +395,7 @@ class RateTrackerPage extends StatelessWidget {
     final totalMinutes = store.hours.fold<double>(0, (a,b) => a + b.minutes);
     final actualCookedHr = totalMinutes > 0 ? totalCooked / (totalMinutes / 60) : 0;
     final actualCasesHr = totalMinutes > 0 ? totalCases / (totalMinutes / 60) : 0;
-    final efficiency = c.cookedHour > 0 ? (actualCookedHr / c.cookedHour * 100).clamp(0, 999).toDouble() : 0;
+    final efficiency = c.cookedHour > 0 ? (actualCookedHr / c.cookedHour * 100).clamp(0, 999).toDouble() : 0.0;
     final expectedCasesByTime = c.casesHour * (totalMinutes / 60);
     final pace = totalCases - expectedCasesByTime;
 
@@ -428,7 +428,7 @@ class RateTrackerPage extends StatelessWidget {
       ...store.hours.map((h) {
         final hCookedHr = h.minutes > 0 ? h.actualCookedLb / (h.minutes / 60) : 0;
         final hCasesHr = h.minutes > 0 ? h.actualCases / (h.minutes / 60) : 0;
-        final hEfficiency = c.cookedHour > 0 ? (hCookedHr / c.cookedHour * 100).clamp(0,999).toDouble() : 0;
+        final hEfficiency = c.cookedHour > 0 ? (hCookedHr / c.cookedHour * 100).clamp(0, 999).toDouble() : 0.0;
         return ProCard(child: Row(children: [
           Container(width: 5, height: 72, decoration: BoxDecoration(color: hEfficiency >= 95 ? green : hEfficiency >= 85 ? orange : red, borderRadius: BorderRadius.circular(4))),
           const SizedBox(width: 12),
@@ -551,7 +551,7 @@ class AdvisorPage extends StatelessWidget {
     final totalCooked = store.hours.fold<double>(0, (a,b) => a + b.actualCookedLb);
     final totalMinutes = store.hours.fold<double>(0, (a,b) => a + b.minutes);
     final actualHr = totalMinutes > 0 ? totalCooked / (totalMinutes / 60) : 0;
-    final efficiency = c.cookedHour > 0 ? actualHr / c.cookedHour * 100 : 0;
+    final efficiency = c.cookedHour > 0 ? (actualHr / c.cookedHour * 100).toDouble() : 0.0;
     return ListView(children: [
       const Header("AI Advisor"),
       ProCard(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
