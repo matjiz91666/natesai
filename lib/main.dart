@@ -409,12 +409,22 @@ class RateTrackerPage extends StatelessWidget {
         Row(children: [stat("DRY LB/HR", f0(c.dryHour)), stat("FEED SEC", f(p.secondsPerFeed))]),
       ])),
       ProCard(child: Column(children: [
-        const Text("ACTUAL SHIFT RATE", style: TextStyle(color: gold, fontWeight: FontWeight.w900)),
-        const SizedBox(height: 10),
-        Row(children: [stat("ACTUAL LB/HR", f0(actualCookedHr.toDouble()), efficiency >= 95 ? green : efficiency >= 85 ? orange : red), stat("ACTUAL CASES/HR", f0(actualCasesHr.toDouble())),
-        Row(children: [stat("EFFICIENCY", "${f0(efficiency)}%", efficiency >= 95 ? green : efficiency >= 85 ? orange : red), stat("PACE", "${pace >= 0 ? "+" : ""}${f0(pace)} cases", pace >= 0 ? green : red)]),
-        const SizedBox(height: 8),
-        Text(pace >= 0 ? "Ahead of theoretical pace" : "Behind theoretical pace", style: TextStyle(color: pace >= 0 ? green : red, fontWeight: FontWeight.w900)),
+  const Text("ACTUAL SHIFT RATE", style: TextStyle(color: gold, fontWeight: FontWeight.w900)),
+  const SizedBox(height: 10),
+  Row(children: [
+    stat("ACTUAL LB/HR", f0(actualCookedHr.toDouble()), efficiency >= 95 ? green : efficiency >= 85 ? orange : red),
+    stat("ACTUAL CASES/HR", f0(actualCasesHr.toDouble())),
+  ]),
+  Row(children: [
+    stat("EFFICIENCY", "${f0(efficiency.toDouble())}%", efficiency >= 95 ? green : efficiency >= 85 ? orange : red),
+    stat("PACE", "${pace >= 0 ? "+" : ""}${f0(pace.toDouble())} cases", pace >= 0 ? green : red),
+  ]),
+  const SizedBox(height: 8),
+  Text(
+    pace >= 0 ? "Ahead of theoretical pace" : "Behind theoretical pace",
+    style: TextStyle(color: pace >= 0 ? green : red, fontWeight: FontWeight.w900),
+  ),
+])),
       ])),
       ProCard(child: Column(children: [
         const Text("SHIFT TOTALS", style: TextStyle(color: gold, fontWeight: FontWeight.w900)),
@@ -434,7 +444,10 @@ class RateTrackerPage extends StatelessWidget {
           const SizedBox(width: 12),
           Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(h.label, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w900)),
-            Text("${f0(h.actualCookedLb)} cooked lb • ${f0(h.actualCases)} cases", style: const TextStyle(color: muted)),
+            Text(
+  "${f0(h.actualCookedLb.toDouble())} cooked lb • ${f0(h.actualCases.toDouble())} cases",
+  style: const TextStyle(color: muted),
+),
             Text("${f0(hCookedHr.toDouble())} lb/hr • ${f0(hCasesHr.toDouble())} cases/hr • ${f0(hEfficiency.toDouble())}%", style: const TextStyle(color: muted)),
           ])),
           IconButton(onPressed: () => store.deleteHour(h), icon: const Icon(Icons.delete_outline, color: red)),
